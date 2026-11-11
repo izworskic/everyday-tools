@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WORD_COUNT_PRESETS } from "@/data/pseoData";
 import TextTools from "@/components/tools/TextTools";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
 export function generateStaticParams() {
   return WORD_COUNT_PRESETS.map((w) => ({ slug: w.slug }));
@@ -16,10 +17,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const preset = WORD_COUNT_PRESETS.find((w) => w.slug === slug) || WORD_COUNT_PRESETS[3];
   const mins = (preset.words / 130).toFixed(1);
-  return {
-    title: `How Long Does It Take to Read ${preset.words.toLocaleString()} Words Out Loud? (~${mins} Mins)`,
-    description: `A ${preset.words.toLocaleString()}-word speech or script takes roughly ${mins} minutes to speak out loud at a conversational 130 WPM pace.`,
-  };
+  return buildPageMetadata(
+    `text/${slug}`,
+    `How Long to Speak ${preset.words.toLocaleString()} Words? (~${mins} Mins)`,
+    `A ${preset.words.toLocaleString()}-word speech or script takes roughly ${mins} minutes to speak out loud at a conversational 130 WPM pace.`
+  );
 }
 
 export default async function TextSlugPage({
@@ -30,6 +32,7 @@ export default async function TextSlugPage({
   const { slug } = await params;
   const preset = WORD_COUNT_PRESETS.find((w) => w.slug === slug) || WORD_COUNT_PRESETS[3];
   const mins = (preset.words / 130).toFixed(1);
+  const pageTitle = `How Long to Speak ${preset.words.toLocaleString()} Words? (~${mins} Mins)`;
 
   return (
     <div className="space-y-6">
@@ -43,7 +46,7 @@ export default async function TextSlugPage({
 
       <div className="rounded-2xl border border-pink-500/30 bg-pink-950/20 p-6 space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30">
-          Pre-Filled Speaking Time pSEO Page • Est. Search Vol: {preset.searchVolume}
+          Pre-Filled Speaking Time Calculator
         </span>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
           How Long to Speak {preset.words.toLocaleString()} Words Out Loud? (~{mins} Minutes)
@@ -54,6 +57,8 @@ export default async function TextSlugPage({
       </div>
 
       <TextTools initialWordCount={preset.words} activeSlug={slug} />
+
+      <CreatorAuthority relPath={`text/${slug}`} pageName={pageTitle} />
     </div>
   );
 }

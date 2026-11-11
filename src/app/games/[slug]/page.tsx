@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WHEEL_PRESETS, WORD_PATTERN_PRESETS } from "@/data/pseoData";
 import GamesTools from "@/components/tools/GamesTools";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
 export function generateStaticParams() {
   return [
@@ -19,17 +20,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const wp = WORD_PATTERN_PRESETS.find((w) => w.slug === slug);
   if (wp) {
-    return {
-      title: `${wp.label} — Complete Wordle & Scrabble Word List`,
-      description: `All ${wp.label.toLowerCase()} with live excluded-letter filter for Wordle, NYT games, Crosswords, and Words With Friends.`,
-    };
+    return buildPageMetadata(
+      `games/${slug}`,
+      `${wp.label} — Wordle & Scrabble Solver`,
+      `Complete list of ${wp.label.toLowerCase()} with live excluded-letter filter for Wordle, Crosswords, and Words With Friends.`
+    );
   }
 
   const wh = WHEEL_PRESETS.find((w) => w.slug === slug) || WHEEL_PRESETS[0];
-  return {
-    title: `${wh.title} — Free Online Random Spinner`,
-    description: wh.description,
-  };
+  return buildPageMetadata(
+    `games/${slug}`,
+    `${wh.title} — Random Spinner`,
+    wh.description
+  );
 }
 
 export default async function GamesSlugPage({
@@ -40,6 +43,9 @@ export default async function GamesSlugPage({
   const { slug } = await params;
   const wp = WORD_PATTERN_PRESETS.find((w) => w.slug === slug);
   const wh = WHEEL_PRESETS.find((w) => w.slug === slug);
+  const pageTitle = wp
+    ? `${wp.label} — Wordle & Scrabble Solver`
+    : `${wh?.title || "Decision Wheel"} — Random Spinner`;
 
   return (
     <div className="space-y-6">
@@ -53,8 +59,7 @@ export default async function GamesSlugPage({
 
       <div className="rounded-2xl border border-cyan-500/30 bg-cyan-950/20 p-6 space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-          Pre-Filled Programmatic SEO Page • Est. Search Vol:{" "}
-          {wp ? wp.searchVolume : wh?.searchVolume || "120,000/mo"}
+          Pre-Filled Interactive Utility
         </span>
         {wp ? (
           <>
@@ -84,6 +89,8 @@ export default async function GamesSlugPage({
         initialContains={wp ? wp.contains : ""}
         activeSlug={slug}
       />
+
+      <CreatorAuthority relPath={`games/${slug}`} pageName={pageTitle} />
     </div>
   );
 }

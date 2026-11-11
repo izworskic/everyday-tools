@@ -1,19 +1,20 @@
 import React from "react";
 import type { Metadata } from "next";
 import KitchenCalculator from "@/components/tools/KitchenCalculator";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
-export const metadata: Metadata = {
-  title: "Air Fryer Time & Temp Chart + Grams to Cups Converter | MegaTools Kitchen",
-  description:
-    "Instant Air Fryer cooking time and temperature lookup for chicken wings, salmon, bacon, and steak, plus exact ingredient weight-to-cups conversion.",
-};
+export const metadata: Metadata = buildPageMetadata(
+  "kitchen",
+  "Air Fryer Time Chart & Grams to Cups Converter",
+  "Instant Air Fryer cooking time and temperature lookup for wings, salmon, bacon, and steak, plus ingredient grams-to-cups conversion."
+);
 
 export default function KitchenHubPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
-          Vertical 2 • 5.2M+ Monthly Search Potential • $32–$48 RPM (Highest Ad Rates)
+          Kitchen & Culinary Reference
         </span>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
           Air Fryer Time & Temp Lookup + Grams-to-Cups Ingredient Converter
@@ -24,6 +25,11 @@ export default function KitchenHubPage() {
       </div>
 
       <KitchenCalculator />
+
+      <CreatorAuthority
+        relPath="kitchen"
+        pageName="Air Fryer Time Chart & Grams to Cups Converter"
+      />
     </div>
   );
 }

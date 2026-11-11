@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WORK_SHIFT_PRESETS } from "@/data/pseoData";
 import TimeCalculator from "@/components/tools/TimeCalculator";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
 export function generateStaticParams() {
   return WORK_SHIFT_PRESETS.map((p) => ({ slug: p.slug }));
@@ -15,10 +16,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const shift = WORK_SHIFT_PRESETS.find((s) => s.slug === slug) || WORK_SHIFT_PRESETS[2];
-  return {
-    title: `How Many Hours Is ${shift.label}? (With 30-Min Break & Payroll Decimal)`,
-    description: `Calculate exact work hours from ${shift.label} with and without a ${shift.breakMinutes}-minute lunch break, including decimal hours for payroll timesheets.`,
-  };
+  return buildPageMetadata(
+    `time/${slug}`,
+    `Hours From ${shift.label} (With 30m Break)`,
+    `Calculate exact work hours from ${shift.label} with and without a ${shift.breakMinutes}-minute lunch break, plus payroll decimal hours.`
+  );
 }
 
 export default async function TimeSlugPage({
@@ -34,6 +36,7 @@ export default async function TimeSlugPage({
   const grossMins = eh * 60 + em - (sh * 60 + sm);
   const netMins = grossMins - shift.breakMinutes;
   const decimalHrs = (netMins / 60).toFixed(2);
+  const pageTitle = `Hours From ${shift.label} (With 30m Break)`;
 
   return (
     <div className="space-y-6">
@@ -47,7 +50,7 @@ export default async function TimeSlugPage({
 
       <div className="rounded-2xl border border-indigo-500/30 bg-indigo-950/20 p-6 space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-          Pre-Filled Shift Duration pSEO Page • Est. Search Vol: {shift.searchVolume}
+          Pre-Filled Shift Duration Page
         </span>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
           How Many Hours Is {shift.label}? ({decimalHrs} Hrs After {shift.breakMinutes}m Break)
@@ -63,6 +66,8 @@ export default async function TimeSlugPage({
         initialBreakMinutes={shift.breakMinutes}
         activeSlug={slug}
       />
+
+      <CreatorAuthority relPath={`time/${slug}`} pageName={pageTitle} />
     </div>
   );
 }

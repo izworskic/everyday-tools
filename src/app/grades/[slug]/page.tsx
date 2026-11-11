@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AP_EXAMS, FINAL_GRADE_PRESETS } from "@/data/pseoData";
 import GradesCalculator from "@/components/tools/GradesCalculator";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
 export function generateStaticParams() {
   return [
@@ -19,17 +20,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const ap = AP_EXAMS.find((e) => e.slug === slug);
   if (ap) {
-    return {
-      title: `${ap.name} Score Calculator (2026 Curve & Cutoff Percentages)`,
-      description: `Interactive ${ap.name} score calculator: convert your ${ap.mcqCount} Multiple Choice questions and Free Response points into a 1–5 AP score.`,
-    };
+    return buildPageMetadata(
+      `grades/${slug}`,
+      `${ap.name} Score Calculator (2026 Curve)`,
+      `Interactive ${ap.name} score calculator: convert ${ap.mcqCount} Multiple Choice questions and Free Response points into a 1-5 AP score.`
+    );
   }
 
   const fg = FINAL_GRADE_PRESETS.find((p) => p.slug === slug) || FINAL_GRADE_PRESETS[0];
-  return {
-    title: `I Have an ${fg.currentGrade}% and My Final Is Worth ${fg.finalWeight}% — What Do I Need?`,
-    description: `Find out what score you need on a final exam worth ${fg.finalWeight}% when your current class grade is ${fg.currentGrade}% to finish with an A (${fg.targetGrade}%).`,
-  };
+  return buildPageMetadata(
+    `grades/${slug}`,
+    `${fg.currentGrade}% Grade With ${fg.finalWeight}% Final Exam Calculator`,
+    `Find out what score you need on a final exam worth ${fg.finalWeight}% when your current class grade is ${fg.currentGrade}% to finish with ${fg.targetGrade}%.`
+  );
 }
 
 export default async function GradesSlugPage({
@@ -40,6 +43,9 @@ export default async function GradesSlugPage({
   const { slug } = await params;
   const ap = AP_EXAMS.find((e) => e.slug === slug);
   const fg = FINAL_GRADE_PRESETS.find((p) => p.slug === slug);
+  const pageTitle = ap
+    ? `${ap.name} Score Calculator (2026 Curve)`
+    : `${fg?.currentGrade || 85}% Grade With ${fg?.finalWeight || 20}% Final Exam Calculator`;
 
   return (
     <div className="space-y-6">
@@ -53,8 +59,7 @@ export default async function GradesSlugPage({
 
       <div className="rounded-2xl border border-purple-500/30 bg-purple-950/20 p-6 space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-          Pre-Filled Academic pSEO Page • Est. Search Vol:{" "}
-          {ap ? ap.searchVolume : fg?.searchVolume || "45,000/mo"}
+          Pre-Filled Academic Calculator Page
         </span>
         {ap ? (
           <>
@@ -84,6 +89,8 @@ export default async function GradesSlugPage({
         initialApSlug={ap ? ap.slug : "ap-biology"}
         activeSlug={slug}
       />
+
+      <CreatorAuthority relPath={`grades/${slug}`} pageName={pageTitle} />
     </div>
   );
 }

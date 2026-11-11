@@ -1,10 +1,12 @@
 {
-  "name": "megatools-pseo-hub",
+  "name": "everyday-tools",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export:hub": "next build",
+    "check:creator-export": "node scripts/check-creator-export.mjs",
     "start": "next start"
   },
   "dependencies": {

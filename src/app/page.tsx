@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   AIR_FRYER_ITEMS,
@@ -9,6 +10,7 @@ import {
   WORD_COUNT_PRESETS,
   WORK_SHIFT_PRESETS,
 } from "@/data/pseoData";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 import {
   Activity,
   ArrowRight,
@@ -22,6 +24,12 @@ import {
   Type,
   Utensils,
 } from "lucide-react";
+
+export const metadata: Metadata = buildPageMetadata(
+  "",
+  "Everyday Calculators & Reference Tools | Chris Izworski",
+  "Fast calculators for TDEE & BMI, air fryer times, grams to cups, work shift hours, AP & final exam grades, Unicode fonts, and 5-letter word solvers."
+);
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   fitness: <Activity className="w-6 h-6 text-white" />,
@@ -40,16 +48,16 @@ export default function HomePage() {
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>All 6 Mass-Market Traffic Giants Built & Pre-Rendered</span>
+            <span>All 6 Everyday Calculator & Reference Suites</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Everyday Utility Engines Built for{" "}
+            Everyday Utility Engines &{" "}
             <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
-              Millions of Monthly Clicks
+              Instant Reference Calculators
             </span>
           </h1>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Zero outdoor tools. Zero financial tools. Just the 6 highest-volume consumer search verticals on the web—powered by Programmatic SEO URL matrices, instant client-side calculators, high-viewability ad slots, and contextual affiliate offers.
+            Fast, zero-bloat calculators for daily decisions: TDEE & strength standards, air fryer cooking times & ingredient conversions, work timesheets & 90-minute sleep cycles, final exam & AP score curves, copy-paste Unicode fonts, and 5-letter word solvers.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <Link
@@ -57,13 +65,13 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs sm:text-sm transition shadow-lg shadow-emerald-500/20"
             >
               <TrendingUp className="w-4 h-4" />
-              <span>Open pSEO Matrix & Revenue Simulator</span>
+              <span>Browse All 95+ Calculator Pages</span>
             </Link>
             <Link
               href="/kitchen"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm border border-slate-700 transition"
             >
-              <span>Explore Highest RPM Vertical (Kitchen $32–$48 RPM)</span>
+              <span>Open Kitchen & Air Fryer Converter</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -73,31 +81,31 @@ export default function HomePage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-6 border-t border-slate-800/80">
           <div className="rounded-xl bg-slate-950/70 border border-slate-800 p-3.5">
             <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-              Combined Search Ceiling
+              Tool Categories
             </span>
-            <p className="text-2xl font-extrabold text-white mt-0.5">41.0M+ / mo</p>
-            <span className="text-[11px] text-emerald-400">Across all 6 verticals</span>
+            <p className="text-2xl font-extrabold text-white mt-0.5">6 Suites</p>
+            <span className="text-[11px] text-emerald-400">Fitness, Kitchen, Time, Grades, Text, Word</span>
           </div>
           <div className="rounded-xl bg-slate-950/70 border border-slate-800 p-3.5">
             <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-              Blended Ad RPM
+              Pre-Built Pages
             </span>
-            <p className="text-2xl font-extrabold text-emerald-400 mt-0.5">$22 – $38</p>
-            <span className="text-[11px] text-slate-400">Mediavine / Raptive Tier</span>
+            <p className="text-2xl font-extrabold text-indigo-400 mt-0.5">96 Routes</p>
+            <span className="text-[11px] text-slate-400">Pre-filled instant answers</span>
           </div>
           <div className="rounded-xl bg-slate-950/70 border border-slate-800 p-3.5">
             <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-              Pre-Built pSEO Routes
+              Response Speed
             </span>
-            <p className="text-2xl font-extrabold text-indigo-400 mt-0.5">85+ Live URLs</p>
-            <span className="text-[11px] text-slate-400">Expandable to 50,000+</span>
-          </div>
-          <div className="rounded-xl bg-slate-950/70 border border-slate-800 p-3.5">
-            <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-              Hosting Cost
-            </span>
-            <p className="text-2xl font-extrabold text-white mt-0.5">$0 / Static</p>
+            <p className="text-2xl font-extrabold text-emerald-400 mt-0.5">Instant</p>
             <span className="text-[11px] text-slate-400">100% Client-Side Compute</span>
+          </div>
+          <div className="rounded-xl bg-slate-950/70 border border-slate-800 p-3.5">
+            <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
+              Mobile Ready
+            </span>
+            <p className="text-2xl font-extrabold text-white mt-0.5">Zero Signup</p>
+            <span className="text-[11px] text-slate-400">Works offline & on phone</span>
           </div>
         </div>
       </section>
@@ -108,10 +116,10 @@ export default function HomePage() {
           <div>
             <h2 className="text-xl font-extrabold text-white flex items-center gap-2">
               <Layers className="w-5 h-5 text-indigo-400" />
-              All 6 High-Volume Consumer Tool Suites
+              All 6 Everyday Calculator Suites
             </h2>
             <p className="text-xs text-slate-400">
-              Click any vertical to launch its interactive calculator hub and browse its programmatic long-tail pages.
+              Select any category below to launch its interactive calculator and browse specific preset pages.
             </p>
           </div>
         </div>
@@ -134,10 +142,7 @@ export default function HomePage() {
                     <span
                       className={`inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${v.badgeColor}`}
                     >
-                      {v.monthlySearchPotential}
-                    </span>
-                    <span className="block text-xs font-semibold text-emerald-400 mt-1">
-                      {v.estimatedRpm}
+                      {v.shortName}
                     </span>
                   </div>
                 </div>
@@ -152,10 +157,7 @@ export default function HomePage() {
                 <div className="rounded-xl bg-slate-950/80 border border-slate-800/80 p-3 space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-amber-300 font-semibold flex items-center gap-1">
-                      <DollarSign className="w-3 h-3" /> Monetization Hook
-                    </span>
-                    <span className="text-emerald-400 font-medium">
-                      {v.affiliateOffer.payout}
+                      <DollarSign className="w-3 h-3" /> Featured Utility
                     </span>
                   </div>
                   <p className="text-xs font-semibold text-slate-200 truncate">
@@ -165,7 +167,7 @@ export default function HomePage() {
               </div>
 
               <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-indigo-400 group-hover:text-indigo-300">
-                <span>Launch Interactive Tools & pSEO Pages</span>
+                <span>Launch Interactive Tools</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
               </div>
             </Link>
@@ -179,17 +181,17 @@ export default function HomePage() {
           <div>
             <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-emerald-400" />
-              Sample Pre-Rendered Long-Tail pSEO Pages (Click Any Slug to Test)
+              Popular Pre-Filled Calculator Pages
             </h2>
             <p className="text-xs text-slate-400">
-              Every URL below pre-fills the interactive calculator with the exact query parameters in the headline and meta tags:
+              Jump directly into a pre-configured calculation:
             </p>
           </div>
           <Link
             href="/seo-matrix"
             className="text-xs font-bold text-emerald-400 hover:underline shrink-0"
           >
-            View Full 85+ URL Matrix →
+            View All 96 Pages →
           </Link>
         </div>
 
@@ -197,7 +199,7 @@ export default function HomePage() {
           {/* Column 1: Fitness + Kitchen */}
           <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 space-y-2">
             <p className="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">
-              1. Body Stats & 2. Kitchen pSEO Slugs
+              1. Body Stats & 2. Kitchen Calculators
             </p>
             <div className="space-y-1.5">
               {BMI_PRESETS.slice(0, 3).map((p) => (
@@ -206,8 +208,8 @@ export default function HomePage() {
                   href={`/fitness/${p.slug}`}
                   className="flex items-center justify-between py-1 px-2 rounded hover:bg-slate-900 text-slate-300 hover:text-white"
                 >
-                  <span>/fitness/{p.slug}</span>
-                  <span className="text-[10px] text-emerald-400">{p.searchVolume}</span>
+                  <span>{p.feet}&apos;{p.inches}&quot; {p.weightLbs} lbs BMI & TDEE</span>
+                  <span className="text-[10px] text-emerald-400">Open →</span>
                 </Link>
               ))}
               {AIR_FRYER_ITEMS.slice(0, 3).map((a) => (
@@ -216,8 +218,8 @@ export default function HomePage() {
                   href={`/kitchen/${a.slug}`}
                   className="flex items-center justify-between py-1 px-2 rounded hover:bg-slate-900 text-slate-300 hover:text-white"
                 >
-                  <span>/kitchen/{a.slug}</span>
-                  <span className="text-[10px] text-amber-400">{a.searchVolume}</span>
+                  <span>Air Fryer {a.name}</span>
+                  <span className="text-[10px] text-amber-400">{a.tempF}°F</span>
                 </Link>
               ))}
             </div>
@@ -226,7 +228,7 @@ export default function HomePage() {
           {/* Column 2: Time + Grades */}
           <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 space-y-2">
             <p className="font-bold text-indigo-400 uppercase tracking-wider text-[11px]">
-              3. Shift Hours & 4. AP Score pSEO Slugs
+              3. Shift Hours & 4. AP Score Calculators
             </p>
             <div className="space-y-1.5">
               {WORK_SHIFT_PRESETS.slice(0, 3).map((s) => (
@@ -235,8 +237,8 @@ export default function HomePage() {
                   href={`/time/${s.slug}`}
                   className="flex items-center justify-between py-1 px-2 rounded hover:bg-slate-900 text-slate-300 hover:text-white"
                 >
-                  <span>/time/{s.slug}</span>
-                  <span className="text-[10px] text-indigo-400">{s.searchVolume}</span>
+                  <span>Hours: {s.label}</span>
+                  <span className="text-[10px] text-indigo-400">Open →</span>
                 </Link>
               ))}
               {AP_EXAMS.slice(0, 3).map((e) => (
@@ -245,8 +247,8 @@ export default function HomePage() {
                   href={`/grades/${e.slug}`}
                   className="flex items-center justify-between py-1 px-2 rounded hover:bg-slate-900 text-slate-300 hover:text-white"
                 >
-                  <span>/grades/{e.slug}</span>
-                  <span className="text-[10px] text-purple-400">{e.searchVolume}</span>
+                  <span>{e.name} Score Calculator</span>
+                  <span className="text-[10px] text-purple-400">1–5 Curve</span>
                 </Link>
               ))}
             </div>
@@ -255,7 +257,7 @@ export default function HomePage() {
           {/* Column 3: Text + Games */}
           <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 space-y-2">
             <p className="font-bold text-pink-400 uppercase tracking-wider text-[11px]">
-              5. Word Time & 6. Spin Wheel pSEO Slugs
+              5. Word Time & 6. Spin Wheels
             </p>
             <div className="space-y-1.5">
               {WORD_COUNT_PRESETS.slice(0, 3).map((w) => (
@@ -264,8 +266,8 @@ export default function HomePage() {
                   href={`/text/${w.slug}`}
                   className="flex items-center justify-between py-1 px-2 rounded hover:bg-slate-900 text-slate-300 hover:text-white"
                 >
-                  <span>/text/{w.slug}</span>
-                  <span className="text-[10px] text-pink-400">{w.searchVolume}</span>
+                  <span>{w.words} Words Speaking Time</span>
+                  <span className="text-[10px] text-pink-400">Open →</span>
                 </Link>
               ))}
               {WHEEL_PRESETS.slice(0, 3).map((wh) => (
@@ -274,14 +276,19 @@ export default function HomePage() {
                   href={`/games/${wh.slug}`}
                   className="flex items-center justify-between py-1 px-2 rounded hover:bg-slate-900 text-slate-300 hover:text-white"
                 >
-                  <span>/games/{wh.slug}</span>
-                  <span className="text-[10px] text-cyan-400">{wh.searchVolume}</span>
+                  <span>{wh.title}</span>
+                  <span className="text-[10px] text-cyan-400">Spin →</span>
                 </Link>
               ))}
             </div>
           </div>
         </div>
       </section>
+
+      <CreatorAuthority
+        relPath=""
+        pageName="Everyday Calculators & Reference Tools | Chris Izworski"
+      />
     </div>
   );
 }

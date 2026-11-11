@@ -1,19 +1,20 @@
 import React from "react";
 import type { Metadata } from "next";
 import FitnessCalculator from "@/components/tools/FitnessCalculator";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
-export const metadata: Metadata = {
-  title: "TDEE, BMI, Macro & Strength Level Calculator | MegaTools Fitness Hub",
-  description:
-    "Calculate your daily maintenance calories (TDEE), optimal protein macro split, weight loss goal date, and barbell strength standards by bodyweight.",
-};
+export const metadata: Metadata = buildPageMetadata(
+  "fitness",
+  "TDEE, BMI, Macro & Strength Level Calculator",
+  "Calculate daily maintenance calories (TDEE), optimal protein macro splits, weight loss timelines, and barbell strength standards by bodyweight."
+);
 
 export default function FitnessHubPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-          Vertical 1 • 3.8M+ Monthly Search Potential • $22–$38 RPM
+          Body Stats & Strength Standards
         </span>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
           Body Stats, TDEE, Macro & Strength Standard Calculator
@@ -24,6 +25,11 @@ export default function FitnessHubPage() {
       </div>
 
       <FitnessCalculator />
+
+      <CreatorAuthority
+        relPath="fitness"
+        pageName="TDEE, BMI, Macro & Strength Level Calculator"
+      />
     </div>
   );
 }

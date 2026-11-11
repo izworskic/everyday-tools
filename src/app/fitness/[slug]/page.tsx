@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BMI_PRESETS } from "@/data/pseoData";
 import FitnessCalculator from "@/components/tools/FitnessCalculator";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
 export function generateStaticParams() {
   return BMI_PRESETS.map((p) => ({ slug: p.slug }));
@@ -19,10 +20,10 @@ function parseSlug(slug: string) {
       feet: Number(match[1]),
       inches: Number(match[2]),
       weightLbs: Number(match[3]),
-      searchVolume: "Long-Tail pSEO",
+      searchVolume: "Preset",
     };
   }
-  return BMI_PRESETS[7]; // 5'9" 175 lbs fallback
+  return BMI_PRESETS[7];
 }
 
 export async function generateMetadata({
@@ -32,10 +33,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const parsed = parseSlug(slug);
-  return {
-    title: `${parsed.feet}'${parsed.inches}" and ${parsed.weightLbs} lbs: BMI, TDEE, Ideal Weight & Macros (2026)`,
-    description: `Is ${parsed.weightLbs} lbs a healthy weight for ${parsed.feet} foot ${parsed.inches}? See exact BMI, daily maintenance calories (TDEE), optimal protein intake, and strength standards for ${parsed.feet}'${parsed.inches}" ${parsed.weightLbs} lbs.`,
-  };
+  return buildPageMetadata(
+    `fitness/${slug}`,
+    `${parsed.feet}'${parsed.inches}" ${parsed.weightLbs} lbs BMI, TDEE & Macros`,
+    `Exact BMI, daily maintenance calories (TDEE), optimal protein intake, and strength standards for ${parsed.feet}'${parsed.inches}" and ${parsed.weightLbs} lbs.`
+  );
 }
 
 export default async function FitnessSlugPage({
@@ -50,6 +52,7 @@ export default async function FitnessSlugPage({
   const heightMeters = (totalInches * 2.54) / 100;
   const weightKg = parsed.weightLbs * 0.453592;
   const bmi = (weightKg / (heightMeters * heightMeters)).toFixed(1);
+  const pageTitle = `${parsed.feet}'${parsed.inches}" ${parsed.weightLbs} lbs BMI, TDEE & Macros`;
 
   return (
     <div className="space-y-6">
@@ -65,7 +68,7 @@ export default async function FitnessSlugPage({
 
       <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-6 space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-          Pre-Filled Programmatic SEO Landing Page • Est. Search Vol: {parsed.searchVolume}
+          Pre-Filled Body Stats Calculator
         </span>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
           {parsed.feet}&apos;{parsed.inches}&quot; and {parsed.weightLbs} lbs: Exact BMI ({bmi}), TDEE & Daily Macro Breakdown
@@ -81,6 +84,8 @@ export default async function FitnessSlugPage({
         initialWeightLbs={parsed.weightLbs}
         activeSlug={slug}
       />
+
+      <CreatorAuthority relPath={`fitness/${slug}`} pageName={pageTitle} />
     </div>
   );
 }

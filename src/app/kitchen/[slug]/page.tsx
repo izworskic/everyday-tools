@@ -7,6 +7,7 @@ import {
   INGREDIENT_CONVERSION_PRESETS,
 } from "@/data/pseoData";
 import KitchenCalculator from "@/components/tools/KitchenCalculator";
+import { buildPageMetadata, CreatorAuthority } from "@/lib/seo-schema";
 
 export function generateStaticParams() {
   return [
@@ -23,25 +24,29 @@ export async function generateMetadata({
   const { slug } = await params;
   const airItem = AIR_FRYER_ITEMS.find((i) => i.slug === slug);
   if (airItem) {
-    return {
-      title: `How Long to Air Fry ${airItem.name} at ${airItem.tempF}°F (${airItem.timeMin}–${airItem.timeMax} Mins)`,
-      description: `Exact air fryer time and temperature for ${airItem.name}: cook at ${airItem.tempF}°F (${airItem.tempC}°C) for ${airItem.timeMin} to ${airItem.timeMax} minutes. ${airItem.proTip}`,
-    };
+    return buildPageMetadata(
+      `kitchen/${slug}`,
+      `Air Fryer ${airItem.name}: ${airItem.tempF}F (${airItem.timeMin}-${airItem.timeMax}m)`,
+      `Exact air fryer time and temperature for ${airItem.name}: cook at ${airItem.tempF}F (${airItem.tempC}C) for ${airItem.timeMin}-${airItem.timeMax} mins.`
+    );
   }
 
   const conv = INGREDIENT_CONVERSION_PRESETS.find((p) => p.slug === slug);
   if (conv) {
     const ing = INGREDIENTS.find((i) => i.id === conv.ingredientId) || INGREDIENTS[0];
     const cups = (conv.grams / ing.gramsPerCup).toFixed(2);
-    return {
-      title: `${conv.grams} Grams of ${ing.name} to Cups (${cups} US Cups & Tbsp)`,
-      description: `How many cups is ${conv.grams}g of ${ing.name}? ${conv.grams} grams equals ${cups} US cups or ${(conv.grams / ing.gramsPerTbsp).toFixed(1)} tablespoons.`,
-    };
+    return buildPageMetadata(
+      `kitchen/${slug}`,
+      `${conv.grams}g ${ing.name} to Cups (${cups} Cups)`,
+      `Convert ${conv.grams} grams of ${ing.name} to US cups (${cups} cups) and tablespoons (${(conv.grams / ing.gramsPerTbsp).toFixed(1)} tbsp).`
+    );
   }
 
-  return {
-    title: "Kitchen & Air Fryer Conversion Tool | MegaTools",
-  };
+  return buildPageMetadata(
+    `kitchen/${slug}`,
+    "Kitchen & Air Fryer Conversion Tool",
+    "Air fryer time and temperature lookup and ingredient weight-to-volume converter."
+  );
 }
 
 export default async function KitchenSlugPage({
@@ -56,6 +61,10 @@ export default async function KitchenSlugPage({
     ? INGREDIENTS.find((i) => i.id === conv.ingredientId) || INGREDIENTS[0]
     : INGREDIENTS[0];
 
+  const pageTitle = airItem
+    ? `Air Fryer ${airItem.name}: ${airItem.tempF}F (${airItem.timeMin}-${airItem.timeMax}m)`
+    : `${conv?.grams || 150}g ${ing.name} to Cups`;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2 text-xs text-slate-400">
@@ -68,8 +77,7 @@ export default async function KitchenSlugPage({
 
       <div className="rounded-2xl border border-amber-500/30 bg-amber-950/20 p-6 space-y-2">
         <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-          Pre-Filled Programmatic SEO Page • Est. Search Vol:{" "}
-          {airItem ? airItem.searchVolume : conv?.searchVolume || "50,000/mo"}
+          Pre-Filled Culinary Conversion Page
         </span>
         {airItem ? (
           <>
@@ -88,7 +96,7 @@ export default async function KitchenSlugPage({
               {((conv?.grams || 150) / ing.gramsPerCup).toFixed(2)} US Cups
             </h1>
             <p className="text-sm text-slate-300 max-w-3xl">
-              Because 1 US cup of <strong>{ing.name}</strong> weighs exactly <strong>{ing.gramsPerCup} grams</strong>,{" "}
+              Because 1 US cup of <strong>{ing.name}</strong> weighs <strong>{ing.gramsPerCup} grams</strong>,{" "}
               {conv?.grams || 150}g converts to <strong>{((conv?.grams || 150) / ing.gramsPerCup).toFixed(2)} cups</strong> or{" "}
               <strong>{((conv?.grams || 150) / ing.gramsPerTbsp).toFixed(1)} tablespoons</strong>.
             </p>
@@ -102,6 +110,8 @@ export default async function KitchenSlugPage({
         initialIngredientId={conv ? conv.ingredientId : "all-purpose-flour"}
         activeSlug={slug}
       />
+
+      <CreatorAuthority relPath={`kitchen/${slug}`} pageName={pageTitle} />
     </div>
   );
 }
